@@ -53,14 +53,20 @@ export class Contact {
     }
     
     private initForm() {
-        const form = document.getElementById('contact-form')
+        const form = document.getElementById('contact-form') as HTMLFormElement
+        const nameInput = document.getElementById('name') as HTMLInputElement
+        const emailInput = document.getElementById('email') as HTMLInputElement
+        const messageInput = document.getElementById('message') as HTMLTextAreaElement
+        const status = document.getElementById('form-status')
+        
         form?.addEventListener('submit', async (e) => {
             e.preventDefault()
-            const name = (document.getElementById('name') as HTMLInputElement).value
-            const email = (document.getElementById('email') as HTMLInputElement).value
-            const message = (document.getElementById('message') as HTMLTextAreaElement).value
             
-            const status = document.getElementById('form-status')
+            // Get values even if not used yet (reserved for backend integration)
+            const _name = nameInput?.value || ''
+            const _email = emailInput?.value || ''
+            const _message = messageInput?.value || ''
+            
             if (status) {
                 status.textContent = 'Sending...'
                 status.classList.remove('hidden')
@@ -69,7 +75,12 @@ export class Contact {
                 setTimeout(() => {
                     status.textContent = '✅ Message sent! I\'ll get back to you soon.'
                     status.className = 'mt-4 text-center text-green-400'
-                    form.reset()
+                    
+                    // Clear form
+                    if (nameInput) nameInput.value = ''
+                    if (emailInput) emailInput.value = ''
+                    if (messageInput) messageInput.value = ''
+                    
                     setTimeout(() => {
                         status.classList.add('hidden')
                     }, 5000)
