@@ -24,7 +24,7 @@ let audioStarted = false
 
 const startAudio = () => {
     if (!audioStarted && audio) {
-        audio.play().catch(() => {})
+        audio.play().catch(() => console.log('Audio play failed'))
         audioStarted = true
         document.removeEventListener('click', startAudio)
         document.removeEventListener('scroll', startAudio)
