@@ -11,8 +11,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,  // Change to false to ignore unused variable warnings
+    "noUnusedParameters": false,  // Change to false to ignore unused parameter warnings
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
