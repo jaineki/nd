@@ -6,6 +6,8 @@ export class Hero {
         this.container.id = 'hero'
         parent.appendChild(this.container)
         this.render()
+        this.initTyping()
+        this.initButtons()
     }
     
     private render() {
@@ -21,7 +23,7 @@ export class Hero {
                         <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-8">
                             I build modern web interfaces and create tools. Eager to learn, improve, and secure systems.
                         </p>
-                        <div class="flex gap-4 justify-center">
+                        <div class="flex gap-4 justify-center flex-wrap">
                             <button class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:scale-105 transition-transform" id="contact-btn">
                                 Contact Me
                             </button>
@@ -33,9 +35,6 @@ export class Hero {
                 </div>
             </div>
         `
-        
-        this.initTyping()
-        this.initButtons()
     }
     
     private initTyping() {
