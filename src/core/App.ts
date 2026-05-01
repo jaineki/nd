@@ -1,3 +1,4 @@
+import { Header } from '../components/Header'
 import { Hero } from '../components/Hero'
 import { About } from '../components/About'
 import { Skills } from '../components/Skills'
@@ -5,7 +6,6 @@ import { Projects } from '../components/Projects'
 import { Services } from '../components/Services'
 import { Contact } from '../components/Contact'
 import { ChatBot } from '../components/ChatBot'
-import { Header } from '../components/Header'
 
 export class App {
     private container: HTMLElement
@@ -54,7 +54,15 @@ export class App {
         toggle.innerHTML = '<span>🌓</span>'
         toggle.onclick = () => {
             document.body.classList.toggle('light')
+            localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark')
         }
+        
+        // Check saved theme
+        const savedTheme = localStorage.getItem('theme')
+        if (savedTheme === 'light') {
+            document.body.classList.add('light')
+        }
+        
         document.body.appendChild(toggle)
     }
     
@@ -65,6 +73,14 @@ export class App {
         hamburger?.addEventListener('click', () => {
             hamburger.classList.toggle('active')
             navMenu?.classList.toggle('active')
+        })
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger?.classList.remove('active')
+                navMenu?.classList.remove('active')
+            })
         })
     }
 }
