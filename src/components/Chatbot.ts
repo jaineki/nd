@@ -1,7 +1,6 @@
 export class ChatBot {
     private container: HTMLElement
     private isOpen: boolean = false
-    private messages: Array<{text: string, isUser: boolean}> = []
     private API_URL = '/api/chat'
     
     constructor(parent: HTMLElement) {
@@ -39,13 +38,13 @@ export class ChatBot {
     
     private initEvents() {
         const toggle = this.container.querySelector('.chat-toggle')
-        const window = this.container.querySelector('.chat-window')
+        const chatWindow = this.container.querySelector('.chat-window')
         const input = this.container.querySelector('#chat-input') as HTMLInputElement
         const send = this.container.querySelector('#chat-send')
         
         toggle?.addEventListener('click', () => {
             this.isOpen = !this.isOpen
-            window?.classList.toggle('open')
+            chatWindow?.classList.toggle('open')
         })
         
         const sendMessage = async () => {
@@ -79,11 +78,17 @@ export class ChatBot {
         messageDiv.className = `mb-3 ${isUser ? 'text-right' : 'text-left'}`
         messageDiv.innerHTML = `
             <div class="inline-block px-4 py-2 rounded-lg ${isUser ? 'bg-blue-600' : 'bg-white/10'}">
-                ${text}
+                ${this.escapeHtml(text)}
             </div>
         `
         messagesDiv?.appendChild(messageDiv)
         messagesDiv?.scrollTo({ top: messagesDiv.scrollHeight, behavior: 'smooth' })
+    }
+    
+    private escapeHtml(text: string): string {
+        const div = document.createElement('div')
+        div.textContent = text
+        return div.innerHTML
     }
     
     private addWelcomeMessage() {
@@ -106,4 +111,4 @@ export class ChatBot {
         const typing = this.container.querySelector('#typing-indicator')
         typing?.remove()
     }
-    }
+}
