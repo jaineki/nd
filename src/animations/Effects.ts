@@ -17,7 +17,7 @@ export class Effects {
         document.body.appendChild(this.cursor)
         document.body.appendChild(this.cursorFollower)
         
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', (e: MouseEvent) => {
             if (this.cursor) {
                 this.cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`
             }
@@ -44,8 +44,10 @@ export class Effects {
     private init3DCards() {
         const cards = document.querySelectorAll('.card-3d')
         cards.forEach((card: Element) => {
-            card.addEventListener('mousemove', (e: MouseEvent) => {
-                const rect = (card as HTMLElement).getBoundingClientRect()
+            const htmlCard = card as HTMLElement
+            
+            htmlCard.addEventListener('mousemove', (e: MouseEvent) => {
+                const rect = htmlCard.getBoundingClientRect()
                 const x = e.clientX - rect.left
                 const y = e.clientY - rect.top
                 const centerX = rect.width / 2
@@ -53,11 +55,11 @@ export class Effects {
                 const rotateX = (y - centerY) / 20
                 const rotateY = (centerX - x) / 20
                 
-                ;(card as HTMLElement).style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`
+                htmlCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`
             })
             
-            card.addEventListener('mouseleave', () => {
-                ;(card as HTMLElement).style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)'
+            htmlCard.addEventListener('mouseleave', () => {
+                htmlCard.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)'
             })
         })
     }
