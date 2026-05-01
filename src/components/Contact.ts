@@ -37,9 +37,9 @@ export class Contact {
                         <div>
                             <h3 class="text-2xl font-bold mb-6">Send Message</h3>
                             <form id="contact-form" class="space-y-4">
-                                <input type="text" id="name" placeholder="Your Name" class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:outline-none focus:border-blue-500">
-                                <input type="email" id="email" placeholder="Your Email" class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:outline-none focus:border-blue-500">
-                                <textarea id="message" rows="4" placeholder="Your Message" class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:outline-none focus:border-blue-500"></textarea>
+                                <input type="text" id="name" name="name" placeholder="Your Name" class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:outline-none focus:border-blue-500">
+                                <input type="email" id="email" name="email" placeholder="Your Email" class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:outline-none focus:border-blue-500">
+                                <textarea id="message" name="message" rows="4" placeholder="Your Message" class="w-full px-4 py-3 bg-white/10 rounded-lg border border-white/20 focus:outline-none focus:border-blue-500"></textarea>
                                 <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:scale-105 transition-transform font-semibold">
                                     Send Message →
                                 </button>
@@ -54,32 +54,34 @@ export class Contact {
     
     private initForm() {
         const form = document.getElementById('contact-form') as HTMLFormElement
-        const nameInput = document.getElementById('name') as HTMLInputElement
-        const emailInput = document.getElementById('email') as HTMLInputElement
-        const messageInput = document.getElementById('message') as HTMLTextAreaElement
         const status = document.getElementById('form-status')
         
         form?.addEventListener('submit', async (e) => {
             e.preventDefault()
             
-            // Get values even if not used yet (reserved for backend integration)
-            const _name = nameInput?.value || ''
-            const _email = emailInput?.value || ''
-            const _message = messageInput?.value || ''
+            // Get form data (reserved for future backend integration)
+            const formData = new FormData(form)
+            const formValues = {
+                name: formData.get('name') as string,
+                email: formData.get('email') as string,
+                message: formData.get('message') as string
+            }
+            
+            // These values are ready for backend integration
+            // You can uncomment and use them when adding real email service
+            // console.log('Form submitted:', formValues)
             
             if (status) {
                 status.textContent = 'Sending...'
                 status.classList.remove('hidden')
                 
-                // Simulate sending (in production, use email service)
+                // Simulate sending (in production, replace with actual API call)
                 setTimeout(() => {
                     status.textContent = '✅ Message sent! I\'ll get back to you soon.'
                     status.className = 'mt-4 text-center text-green-400'
                     
                     // Clear form
-                    if (nameInput) nameInput.value = ''
-                    if (emailInput) emailInput.value = ''
-                    if (messageInput) messageInput.value = ''
+                    form.reset()
                     
                     setTimeout(() => {
                         status.classList.add('hidden')
