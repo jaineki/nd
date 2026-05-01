@@ -67,7 +67,7 @@ export class ChatBot {
         }
         
         send?.addEventListener('click', sendMessage)
-        input?.addEventListener('keypress', (e) => {
+        input?.addEventListener('keypress', (e: KeyboardEvent) => {
             if (e.key === 'Enter') sendMessage()
         })
     }
@@ -111,4 +111,4 @@ export class ChatBot {
         const typing = this.container.querySelector('#typing-indicator')
         typing?.remove()
     }
-}
+    }
